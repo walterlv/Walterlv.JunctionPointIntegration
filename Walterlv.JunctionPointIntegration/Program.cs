@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Walterlv.IO.PackageManagement.Core;
 
 namespace Walterlv.JunctionPointIntegration
@@ -9,28 +11,42 @@ namespace Walterlv.JunctionPointIntegration
     {
         static void Main(string[] args)
         {
+            Debugger.Launch();
             if (args.Length == 2)
             {
                 // 传入参数 "联接目录" "目标目录"
-                Link(args[0], args[1]);
-            }
-            else if (args.Length == 3)
-            {
-                // 传入参数 "联接目录" "联接所在的目录" "目标目录"
-                if (string.IsNullOrWhiteSpace(args[0]))
+                if (!string.IsNullOrWhiteSpace(args[1]))
                 {
-                    // 如果来源程序没有传入 "联接目录"，意味着没有选中文件夹，那么联接当前目录。
-                    Link(args[1], args[2]);
+                    Link(args[0], args[1]);
                 }
                 else
                 {
-                    // 如果来源程序传入了 "联接目录"，意味着选中了文件夹，那么联接选中的文件夹。
-                    Link(args[0], args[2]);
+                    Console.WriteLine("没有指定目标目录。");
+                }
+            }
+            else if (args.Length == 4)
+            {
+                // 传入参数 "联接目录" "联接所在的目录" "目标目录" "目标目录所在的目录" 
+                // 如果来源程序没有传入 "目录"（参数 0 和 2），意味着没有选中文件夹，那么使用当前目录。
+                // 如果来源程序传入了 "目录"（参数 0 和 2），意味着选中了文件夹，那么使用选中的文件夹。
+                var linkDirectory = string.IsNullOrWhiteSpace(args[0]) ? args[1] : args[0];
+                var targetDirectory = string.IsNullOrWhiteSpace(args[2]) || !Directory.Exists(args[2]) ? args[3] : args[2];
+                if (string.IsNullOrWhiteSpace(targetDirectory))
+                {
+                    Console.WriteLine("请打开双栏显示，这样才可以将非激活的文件夹作为联接的目标目录。");
+                    Thread.Sleep(2000);
+                }
+                else
+                {
+                    Link(linkDirectory, targetDirectory);
                 }
             }
             else
             {
-                Environment.FailFast("必须传入两个参数：junction-point Link Target");
+                Console.WriteLine("必须传入两个或四个参数：");
+                Console.WriteLine(" - junction-point Link Target");
+                Console.WriteLine(" - junction-point SelectedLinkFolder LinkFolder SelectedTargetFolder TargetFolder");
+                Thread.Sleep(2000);
             }
         }
 
