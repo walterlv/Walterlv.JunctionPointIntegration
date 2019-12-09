@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -11,7 +10,6 @@ namespace Walterlv.JunctionPointIntegration
     {
         static void Main(string[] args)
         {
-            Debugger.Launch();
             if (args.Length == 2)
             {
                 // 传入参数 "联接目录" "目标目录"
