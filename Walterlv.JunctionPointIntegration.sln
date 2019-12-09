@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.JunctionPointIntegration", "Walterlv.JunctionPointIntegration\Walterlv.JunctionPointIntegration.csproj", "{71AFBAC6-9D00-4722-9B51-43FD7EEFFECF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71AFBAC6-9D00-4722-9B51-43FD7EEFFECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71AFBAC6-9D00-4722-9B51-43FD7EEFFECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71AFBAC6-9D00-4722-9B51-43FD7EEFFECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71AFBAC6-9D00-4722-9B51-43FD7EEFFECF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0834F4D1-0934-4CC6-957C-2725623F8748}
+	EndGlobalSection
+EndGlobal
