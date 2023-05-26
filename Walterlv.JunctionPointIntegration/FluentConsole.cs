@@ -39,9 +39,14 @@ public readonly ref struct FluentConsole
     /// </summary>
     /// <typeparam name="T">返回值类型。</typeparam>
     /// <param name="value">返回值。</param>
+    /// <param name="sleep">返回前的等待时间。</param>
     /// <returns>返回值。</returns>
-    public T Return<T>(T value)
+    public T Return<T>(T value, int sleep = 0)
     {
+        if (sleep > 0)
+        {
+            Thread.Sleep(sleep);
+        }
         return value;
     }
 }

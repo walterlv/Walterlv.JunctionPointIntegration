@@ -1,25 +1,29 @@
-﻿FluentConsole console = new()
-{
-    UsageText = """
-        用法: junction-point [link] [target]
-        用法: junction-point [selected-link-folder] [link-folder] [selected-target-folder] [target-folder]
+﻿using Pastel;
 
-        link:
+using System.Drawing;
+
+FluentConsole console = new()
+{
+    UsageText = $"""
+        用法: junction-point {"[link]".Pastel("#0087D8")} {"[target]".Pastel("#F9F1A5")}
+        用法: junction-point {"[selected-link-folder]".Pastel("#0087D8")} {"[link-folder]".Pastel(Color.Gray)} {"[selected-target-folder]".Pastel("#F9F1A5")} {"[target-folder]".Pastel(Color.Gray)}
+
+        {"link".Pastel("#0087D8")}:
             目录联接的路径。
-        target:
+        {"target".Pastel("#F9F1A5")}:
             目标目录的路径。
-        selected-link-folder:
+        {"selected-link-folder".Pastel("#0087D8")}:
             选中的目录联接的路径。
-        link-folder:
+        {"link-folder".Pastel(Color.Gray)}:
             目录联接所在的目录。
-        selected-target-folder:
+        {"selected-target-folder".Pastel("#F9F1A5")}:
             选中的目标目录的路径。
-        target-folder:
+        {"target-folder".Pastel(Color.Gray)}:
             目标目录所在的目录。
 
         示例:
-            junction-point "C:\Users\walterlv\Documents\GitHub" "C:\Users\walterlv\GitHub"
-            junction-point "C:\Users\walterlv\Documents\GitHub" "C:\Users\walterlv\Documents" "C:\Users\walterlv\GitHub" "C:\Users\walterlv"
+            junction-point {@"C:\Users\walterlv\Documents\GitHub".Pastel("#0087D8")} {@"C:\Users\walterlv\GitHub".Pastel("#F9F1A5")}
+            junction-point {@"C:\Users\walterlv\Documents\GitHub".Pastel("#0087D8")} {@"C:\Users\walterlv\Documents".Pastel(Color.Gray)} {@"C:\Users\walterlv\GitHub".Pastel("#F9F1A5")} {@"C:\Users\walterlv".Pastel(Color.Gray)}
         """,
 };
 
@@ -31,7 +35,7 @@ catch (Exception ex)
 {
     return console
         .PrintError(ex.Message)
-        .Return(-1);
+        .Return(-1, 3000);
 }
 
 static int Run(in FluentConsole console, string[] args)
@@ -41,7 +45,7 @@ static int Run(in FluentConsole console, string[] args)
         // 传入参数 "联接目录" "目标目录"
         if (!string.IsNullOrWhiteSpace(args[1]))
         {
-            Link(args[0], args[1]);
+            FluentLink(args[0], args[1]);
             return 0;
         }
         else
@@ -49,7 +53,7 @@ static int Run(in FluentConsole console, string[] args)
             return console
                 .PrintError("没有指定目标目录。")
                 .PrintUsage()
-                .Return(-1);
+                .Return(-1, 3000);
         }
     }
     else if (args.Length == 4)
@@ -64,11 +68,11 @@ static int Run(in FluentConsole console, string[] args)
             return console
                 .PrintError("请打开双栏显示，这样才可以将非激活的文件夹作为联接的目标目录。")
                 .PrintUsage()
-                .Return(-1);
+                .Return(-1, 3000);
         }
         else
         {
-            Link(linkDirectory, targetDirectory);
+            FluentLink(linkDirectory, targetDirectory);
             return 0;
         }
     }
@@ -78,4 +82,15 @@ static int Run(in FluentConsole console, string[] args)
             .PrintUsage()
             .Return(0);
     }
+}
+
+static void FluentLink(string link, string target)
+{
+    Console.WriteLine($"""
+        创建目录联接 🗂️
+         🔗 联接: {link.Pastel("#0087D8")}
+         🎯 目标: {target.Pastel("#F9F1A5")}
+        """);
+    JunctionPointHelper.Link(link, target);
+    Console.WriteLine("✅ 已成功创建".Pastel(Color.Green));
 }
